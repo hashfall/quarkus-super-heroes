@@ -37,13 +37,13 @@ public class VillainService {
         return villain;
     }
 
-    public Villain updateVillain(@Valid Villain villian) {
-        Villain entity = Villain.findById(villian.id);
-        entity.name = villian.name;
-        entity.otherName = villian.otherName;
-        entity.level = villian.level;
-        entity.picture = villian.picture;
-        entity.powers = villian.powers;
+    public Villain updateVillain(@Valid Villain villain) {
+        Villain entity = Villain.findById(villain.id);
+        entity.name = villain.name;
+        entity.otherName = villain.otherName;
+        entity.level = villain.level;
+        entity.picture = villain.picture;
+        entity.powers = villain.powers;
         return entity;
     }
 
