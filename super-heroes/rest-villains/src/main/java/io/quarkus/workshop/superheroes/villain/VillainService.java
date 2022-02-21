@@ -3,6 +3,8 @@ package io.quarkus.workshop.superheroes.villain;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
@@ -13,6 +15,8 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 @Transactional(REQUIRED)
 public class VillainService {
+
+    @ConfigProperty(name = "level.maltiplier", defaultValue = "1.0") double levelMultiplier;
     
     @Transactional(SUPPORTS)
     public List<Villain> findAllVillains() {
@@ -33,6 +37,7 @@ public class VillainService {
     }
 
     public Villain persistVillain(@Valid Villain villain) {
+        villain.level = (int) Math.round(villain.level * levelMultiplier);
         villain.persist();
         return villain;
     }

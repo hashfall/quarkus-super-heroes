@@ -13,26 +13,40 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+
 import org.jboss.logging.Logger;
+
 import org.jboss.resteasy.reactive.RestPath;
 
 import java.util.List;
 
 @Path("api/villains")
+@Tag(name="villains")
 public class VillainResource {
 
     Logger logger;
     VillainService service;
-
-    
 
     public VillainResource(Logger logger, VillainService service) {
         this.logger = logger;
         this.service = service;
     }
 
+    @Operation(summary = "Returns a random villain")
     @GET
     @Path("/random")
+    @APIResponse(
+         responseCode = "200",
+         content = @Content(mediaType = "APPLICATION_JSON",
+         schema = @Schema(implementation = Villain.class,
+         required = true))
+    )
     public Response getRandomVillain() {
         Villain villain = service.findRandomVillain();
         logger.debug("Found random villain " + villain);
