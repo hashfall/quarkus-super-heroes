@@ -45,6 +45,15 @@ public class VillainResourceTest {
     private static String villainId;
 
     @Test
+    void shouldPingOpenAPI() {
+        given()
+            .header(ACCEPT, JSON)
+            .when().get("/q/openapi")
+            .then()
+            .statusCode(OK.getStatusCode());
+    }
+
+    @Test
     public void testHelloEndpoint() {
         given()
           .when().get("/api/villains/hello")
